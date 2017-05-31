@@ -107,7 +107,7 @@ public:
         };
     }
 
-    void notify_all() noexcept
+    void notify_all()
     {
         lock_guard<recursive_mutex> lock(mMutex); //block any further wait requests until all current waiters are unblocked
         if (mNumWaiters.load() <= 0)
@@ -128,7 +128,7 @@ public:
 //See _wait_impl for details
         while(WaitForSingleObject(mSemaphore, 0) == WAIT_OBJECT_0);
     }
-    void notify_one() noexcept
+    void notify_one()
     {
         lock_guard<recursive_mutex> lock(mMutex);
         if (!mNumWaiters)
